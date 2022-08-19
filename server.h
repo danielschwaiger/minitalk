@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:19 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/06/20 16:15:28 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:57:52 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef SERVER_H
+# define SERVER_H
 
-#ifndef MINITALK_H
-# define MINITALK_H
-
-
+static void receive_signal(int signal);
 
 #endif

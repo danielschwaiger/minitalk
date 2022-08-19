@@ -6,36 +6,16 @@
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:48 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/06/26 21:04:49 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:58:27 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
-#include "minitalk.h"
+#include "client.h"
 #include "libft.h"
 #include "ft_printf.h"
 
-//TODO implement malloc !! 
-// TODO implement a function to print-out the received string !! GNL ??? 
 // pass the norminette !! 
-
-void	send_signal(unsigned char c, int pid)
-{
-	int	bit;
-
-	bit = 0;
-	while (bit < 8)
-	{
-		if (c & (1 << bit))
-			kill(pid, SIGUSR1);
-			//exit(1) ?
-		else
-			kill(pid, SIGUSR2);
-			//exit(1) ?
-		usleep(10000); // look how to implement it several times .. 
-		bit++;
-	}  // how do i know when the string ended???
-}
 
 int	main(int argc, char **argv)
 {
@@ -58,4 +38,20 @@ int	main(int argc, char **argv)
 	}
 	send_signal('\n', pid);
 	return (0);
+}
+
+void	send_signal(unsigned char c, int pid)
+{
+	int	bit;
+
+	bit = 0;
+	while (bit < 8)
+	{
+		if (c & (1 << bit))
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		usleep(100); 
+		bit++;
+	}
 }
