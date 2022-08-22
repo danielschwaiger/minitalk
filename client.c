@@ -6,52 +6,27 @@
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:48 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/08/19 15:58:27 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:28:25 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include "client.h"
-#include "libft.h"
-#include "ft_printf.h"
-
-// pass the norminette !! 
+#include "minitalk.h"
 
 int	main(int argc, char **argv)
 {
-	int	pid;
-	int	i;
-
 	if (argc != 3)
 	{
-		ft_printf("Error! Invalid number of arguments!!\n");
-		return (0);
-	}
-	pid = ft_atoi(argv[1]);
-	if (pid == -1 || !pid || argv[2][0] == '\0')
-		return (0);
-	i = 0;
-	while (argv[2][i])
+		ft_putstr_fd("\e[33m## error - incorrect arguments! ##\n\e[0m", STDOUT_FILENO);
+		ft_putstr_fd("\e[31m./client <the server PID> <the string to send>\n\e[0m",STDOUT_FILENO);
+		return (EXIT_FAILURE);
+	}	
+	else if (kill(ft_atoi(argv[1]), 0) < 0)
 	{
-		send_signal(argv[2][i], pid);
-		i++;
+		ft_putstr_fd("\e[33m## error - INVALID PID ##\n\e[0m", STDOUT_FILENO);
+		return (EXIT_FAILURE);
 	}
-	send_signal('\n', pid);
-	return (0);
+	// sigaction implementation !
+	// handler for sending sigur1 and sigur2 using t_protocol !
+	return (EXIT_SUCCESS);
 }
 
-void	send_signal(unsigned char c, int pid)
-{
-	int	bit;
-
-	bit = 0;
-	while (bit < 8)
-	{
-		if (c & (1 << bit))
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		usleep(100); 
-		bit++;
-	}
-}

@@ -6,53 +6,39 @@
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:52 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/08/19 19:43:36 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/22 11:45:19 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include "server.h"
-#include "libft.h"
-#include "ft_printf.h"
-
-//TODO implement malloc !! 
-// TODO implement a function to printout the received string !!
-// pass the norminette !! 
+#include "minitalk.h"
 
 int main(int argc, char **argv)
 {
-	(void)argv;
+	(void)argv; // !!!!
+	sigset_t block;
+	
 	if (argc != 1)
 	{
-		ft_printf("Please, run server without any arguments!\n");
-		return (0);
+		ft_putstr_fd("\e[33m## error - Please run server without any arguments! ##\n\e[0m", STDOUT_FILENO);
+		return (EXIT_FAILURE);
 	}
-	ft_printf("Server running (PID : %d):\n", getpid());
+	ft_putstr_fd("\e[32m## SUCCES! ##\n\e[0m", STDOUT_FILENO);
+	ft_printf("\e[31m Server running (PID : %d):\n", getpid());
+	// we cancel signals like SIGTERM or SIGINT as we dont want our program to end while waiting in standby for string messages!
+	sigemptyset(&block);
+	sigaddset(&block, SIGTERM);
+	sigaddset(&block, SIGINT);
+
+	
 	while(1)
 	{
-		signal(SIGUSR1, receive_signal);
-		signal(SIGUSR2, receive_signal);
-		pause ();
-	}
-	return (0);
-}
-
-static void receive_signal(int signal)
-{
-	static int bit;
-	static int n;
-
-	if (signal == SIGUSR1) // checks if signal id is the same as SISGUSR1 to continue !
-		n |= (1 << bit); // n = n | (1<< bit); moves one byte to the left ?? 
-	bit++;
-	if (bit == 8)
-	{
-		/* ft_printf("%c", n); create a function to capture each byte and convert it into a string !*/
-		if(n != '\0')
+		while(1)
 		{
-			ft_printf("%c", n);
+			ft_printf("\e[32m Waiting for messages: \n");
+			break ;
 		}
-		bit = 0;
-		n = 0;
+		pause();
 	}
+	return (EXIT_SUCCESS);
 }
+
