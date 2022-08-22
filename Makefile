@@ -6,7 +6,7 @@
 #    By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:13:24 by dapanciu          #+#    #+#              #
-#    Updated: 2022/06/20 18:20:22 by dapanciu         ###   ########.fr        #
+#    Updated: 2022/08/22 17:27:03 by dapanciu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,11 @@ NAME_LIBFT = libft/libft.a
 PRINTF = ./ft_printf
 NAME_PRINTF = ft_printf/libftprintf.a
 
-CLIENT_SRCS	= client.c 
-SERVER_SOURCES = server.c 
+CLIENT_SRCS	= client.c \
+			  minitalk.c 
+			  
+SERVER_SOURCES = server.c \
+				 minitalk.c 
 
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 SERVER_OBJECTS = $(SERVER_SOURCES:.c=.o)
