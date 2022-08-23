@@ -6,7 +6,7 @@
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:48 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/08/22 18:03:48 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/23 15:28:01 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv)
 	pa_client.sa_flags = SA_RESTART;
 	pa_client.sa_handler = client_handler;
 	// configure a custom handler to catch and strout error messages in case that communication fails.
+	signals_configuration_sigaction(&pa_client);
 	send_client_message(ft_atoi(argv[1]), argv[2]);
 	return (EXIT_SUCCESS);
 }

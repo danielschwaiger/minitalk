@@ -6,7 +6,7 @@
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 17:22:52 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/08/22 18:59:55 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/23 15:44:21 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,36 @@ void send_byte(pid_t pid, char byte, char flag)
 	if (byte == 0)
 	{
 		if (kill(pid, SIGUSR2) < 0)
+		{
 			ft_putstr_fd("\e[33m## ERROR - Sending SIGUSR2 ##\n\e[0m", STDOUT_FILENO);
 			exit (EXIT_FAILURE);
+		}
 	}
 	else if (byte == 1)
 	{
-		kill(pid, SIGUSR1) < 0)
-			ft_putstr_fd("\e[33m## ERROR - SIGUSR1 ##\n\e[0m", STDOUT_FILENO);
+		if (kill(pid, SIGUSR1) < 0)
+		{
+				ft_putstr_fd("\e[33m## ERROR - SIGUSR1 ##\n\e[0m", STDOUT_FILENO);
 			exit(EXIT_FAILURE);
+		}
 	}
 	if (flag != 0)
 		pause();
 }
+
+// configures signals for both sides communication.
+
+void signals_configuration_sigaction(struct sigaction *pa)
+{
+	if (sigaction(SIGUSR1, pa, NULL) < 0)
+	{
+		ft_putstr_fd("Error - could not send SIGUSR1", STDOUT_FILENO);
+		exit(EXIT_FAILURE);
+	}	
+	if (sigaction(SIGURG, pa, NULL) < 0)
+	{
+		ft_putstr_fd("Error - could not send SIGUSR2", STDOUT_FILENO);
+		exit(EXIT_FAILURE);
+	}
+}
+
