@@ -6,7 +6,7 @@
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:48 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/08/23 15:28:01 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/24 17:19:34 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 // this function will check if server receives sigusr1 or sigusr2.
 static void client_handler(int signal)
 {
-	if (signal == SIGUSR1)
-	{
+	// implememt a counter to print the total of bytes sent !
+	
+	if (signal == SIGUSR1_IS_0)
 		ft_putstr_fd("\e[33m## Succes - SIGUSR1 is AKC by the server ##\n\e[0m", STDOUT_FILENO);		
-	}
-	else if (signal == SIGUSR2)
+	else if (signal == SIGUSR2_IS_1)
 	{
-		ft_putstr_fd("\e[33m## Succes - SIGUSR2 is AKC by the server ##\n\e[0m", STDOUT_FILENO);
+		ft_putstr_fd("\e[33m## END of Message - SIGUSR2 is AKC by the server ##\n\e[0m", STDOUT_FILENO);
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -32,9 +32,18 @@ static  void send_client_message(int server_pid, char *str)
 
 	i = 0;
 
+	ft_putstr_fd("\e[92msending length = [", STDOUT_FILENO);
+	ft_putnbr_fd(ft_strlen(str), STDOUT_FILENO);
 	send_str_len(server_pid, ft_strlen(str));
+	ft_putstr_fd("\e[92msending message\n\e[0m", STDOUT_FILENO);
 	// check if null has been sent.
-	// send_char
+	while (str[i] != '\0')
+	{
+		send_char(server_pid, str[i]);
+		i++;
+	}
+	ft_putstr_fd("\e[92mEnd of message!\n\e[0m", STDOUT_FILENO);
+	send_char(server_pid, '\0');
 }
 
 int	main(int argc, char **argv)

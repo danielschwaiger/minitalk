@@ -6,7 +6,7 @@
 #    By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:13:24 by dapanciu          #+#    #+#              #
-#    Updated: 2022/08/22 17:27:03 by dapanciu         ###   ########.fr        #
+#    Updated: 2022/08/24 17:08:37 by dapanciu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SERVER_SOURCES = server.c \
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 SERVER_OBJECTS = $(SERVER_SOURCES:.c=.o)
 
+
 CC			= gcc
 
 CFLAGS		= -Wall -Wextra -Werror
@@ -37,6 +38,8 @@ RM			= rm -f
 SANITIZE = -fsanitize=address -g3
 
 VALGRIND = valgrind --leak-check=full --show-leak-kinds=all
+
+.SILENT:
 
 all: $(NAME_LIBFT) $(NAME_PRINTF) $(CLIENT_NAME) $(SERVER_NAME)
 
