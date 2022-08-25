@@ -6,13 +6,19 @@
 #    By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:13:24 by dapanciu          #+#    #+#              #
-#    Updated: 2022/08/24 17:08:37 by dapanciu         ###   ########.fr        #
+#    Updated: 2022/08/25 14:49:10 by dapanciu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CLIENT_NAME	= client
 SERVER_NAME = server
 
+CLIENT_BONUS = client_bonus
+SERVER_BONUS = server_bonus
+
+CLIENT_BONUS_SOURCES = client_bonus.c minitalk_bonus.c 
+SERVER_BONUS_SOURCES = server_bonus.c minitalk_bonus.c
+						
 LIBFT = ./libft
 NAME_LIBFT = libft/libft.a
 
@@ -23,10 +29,13 @@ CLIENT_SRCS	= client.c \
 			  minitalk.c 
 			  
 SERVER_SOURCES = server.c \
-				 minitalk.c 
+				 minitalk.c 	
 
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 SERVER_OBJECTS = $(SERVER_SOURCES:.c=.o)
+
+CLIENT_BONUS_OBJ =  $(CLIENT_BONUS_SOURCES:.c=.o)
+SERVER_BONUS_OBJ = $(CLIENT_BONUS_SOURCES:.c=.o)
 
 
 CC			= gcc
@@ -39,9 +48,9 @@ SANITIZE = -fsanitize=address -g3
 
 VALGRIND = valgrind --leak-check=full --show-leak-kinds=all
 
-.SILENT:
+#.SILENT:
 
-all: $(NAME_LIBFT) $(NAME_PRINTF) $(CLIENT_NAME) $(SERVER_NAME)
+all: $(NAME_LIBFT) $(NAME_PRINTF) $(CLIENT_NAME) $(SERVER_NAME) 
 
 $(NAME_PRINTF):
 		make -C $(PRINTF)
@@ -80,6 +89,30 @@ fclean: clean
 	make fclean -C $(LIBFT)
 	make fclean -C $(PRINTF)
 
-re: fclean all
+bonus: $(NAME_LIBFT) $(NAME_PRINTF) $(CLIENT_BONUS) $(SERVER_BONUS) 
 
-.PHONY: libft ft_printf all clean fclean re
+	$(NAME_PRINTF):
+		make -C $(PRINTF)
+
+	$(NAME_LIBFT):
+		make -C $(LIBFT)
+	
+	 %.o : %.c $(SERVER_BONUS_SOURCES)
+		@echo "Compiling SOURCES"
+		$(CC) $(CFLAGS) -I $(LIBFT) -I $(PRINTF) -c -o $@ $<
+		@echo "Succesful Compiling"
+
+	%.o : %.c $(CLIENT_BONUS_SOURCES)
+		@echo "Compiling SOURCES"
+		$(CC) $(CFLAGS) -I $(LIBFT) -I $(PRINTF) -c -o $@ $<
+		@echo "Succesful Compiling"
+
+$(CLIENT_BONUS): $(CLIENT_BONUS_OBJ) $(NAME_LIBFT) $(NAME_PRINTF)
+		$(CC) $(CFLAGS) -o $(CLIENT_BONUS) $(CLIENT_BONUS_OBJ) $(NAME_LIBFT) $(NAME_PRINTF)
+
+$(SERVER_BONUS): $(SERVER_BONUS_OBJ) $(NAME_LIBFT) $(NAME_PRINTF)
+		$(CC) $(CFLAGS) -o $(SERVER_BONUS) $(SERVER_BONUS_OBJ) $(NAME_LIBFT) $(NAME_PRINTF)
+	
+re: fclean all 
+
+.PHONY: libft ft_printf all clean bonus fclean re

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:52 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/08/25 12:29:26 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:19:42 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static void	server_is_message_finished(
 	t_protocol *pa_server, int *i, pid_t client_pid)

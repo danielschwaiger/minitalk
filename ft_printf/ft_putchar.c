@@ -6,7 +6,7 @@
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 11:39:39 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/06/20 15:45:19 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/25 12:04:55 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_putchar(char c)
 {
 	int	dest;
-	
+
 	dest = 0;
 	dest += write(1, &c, 1);
 	return (dest);

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:19 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/08/25 12:31:53 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:19:31 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef MINITALK_BONUS_H
+# define MINITALK_BONUS_H
 # define SIGUSR1_IS_0 SIGUSR1
 # define SIGUSR2_IS_1 SIGUSR2
 # define WAIT_100 100
