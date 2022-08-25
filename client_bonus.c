@@ -6,22 +6,22 @@
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:48 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/08/25 14:19:51 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:33:29 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
-static void	client_handler(int signal)
+static void	client_handler(int sig)
 {
-	if (signal == SIGUSR1_IS_0)
+	if (sig == SIGUSR1_IS_0)
+		ft_putstr_fd("\e[33m > ACK signal received from server\n\e[0m",
+			STDOUT_FILENO);
+	else if (sig == SIGUSR2_IS_1)
 	{
-		ft_putstr_fd("SIGUSR1 sent to server", STDOUT_FILENO);
-	}
-	else if (signal == SIGUSR2_IS_1)
-	{
-		ft_putstr_fd("END of Message - SIGUSR2", STDOUT_FILENO);
-		exit (EXIT_SUCCESS);
+		ft_putstr_fd("\e[92m > end of message signal received from server\n\e[0m",
+			STDOUT_FILENO);
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -51,8 +51,8 @@ int	main(int argc, char **argv)
 	{
 		ft_putstr_fd("\e[33m## error - incorrect arguments! \
 			 ##\n\e[0m", STDOUT_FILENO);
-		ft_putstr_fd("\e[31m./client <the server PID> <the \
-			string to send>\n\e[0m", STDOUT_FILENO);
+		ft_putstr_fd("\e[31m./client <the server PID> <the string to send>\n\e[0m",
+			STDOUT_FILENO);
 		return (EXIT_FAILURE);
 	}
 	else if (kill(ft_atoi(argv[1]), 0) < 0)

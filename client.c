@@ -6,22 +6,22 @@
 /*   By: dapanciu <dapanciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:13:48 by dapanciu          #+#    #+#             */
-/*   Updated: 2022/08/25 12:24:19 by dapanciu         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:45:47 by dapanciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void	client_handler(int signal)
+static void	client_handler(int sig)
 {
-	if (signal == SIGUSR1_IS_0)
+	if (sig == SIGUSR1_IS_0)
+		ft_putstr_fd("\e[33m > ACK signal received from server\n\e[0m",
+			STDOUT_FILENO);
+	else if (sig == SIGUSR2_IS_1)
 	{
-		ft_putstr_fd("SIGUSR1 sent to server", STDOUT_FILENO);
-	}
-	else if (signal == SIGUSR2_IS_1)
-	{
-		ft_putstr_fd("END of Message - SIGUSR2", STDOUT_FILENO);
-		exit (EXIT_SUCCESS);
+		ft_putstr_fd("\e[92m > end of message signal received from server\n\e[0m",
+			STDOUT_FILENO);
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -30,16 +30,15 @@ static void	send_client_message(int server_pid, char *str)
 	int	i;
 
 	i = 0;
-	ft_putstr_fd("\e[92msending length = [", STDOUT_FILENO);
+	ft_putstr_fd("\e[92mSending lenght of string = ", STDOUT_FILENO);
 	ft_putnbr_fd(ft_strlen(str), STDOUT_FILENO);
+	ft_putstr("\n");
 	send_str_len(server_pid, ft_strlen(str));
-	ft_putstr_fd("\e[92msending message\n\e[0m", STDOUT_FILENO);
 	while (str[i] != '\0')
 	{
 		send_char(server_pid, str[i]);
 		i++;
 	}
-	ft_putstr_fd("\e[92mEnd of message!\n\e[0m", STDOUT_FILENO);
 	send_char(server_pid, '\0');
 }
 
